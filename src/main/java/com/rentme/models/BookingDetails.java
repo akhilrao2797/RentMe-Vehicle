@@ -2,7 +2,8 @@ package com.rentme.models;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.validation.constraints.FutureOrPresent;
 import javax.validation.constraints.PastOrPresent;
 import java.time.LocalDateTime;
@@ -13,10 +14,12 @@ public class BookingDetails {
     @Id
     String bookingId;
 
-    @ManyToMany
+    @OneToOne
+    @JoinColumn(name = "customer_id")
     Customer customerId;
 
-    @ManyToMany
+    @OneToOne
+    @JoinColumn(name = "vehicle_id")
     Vehicle vehicle;
 
     @PastOrPresent
