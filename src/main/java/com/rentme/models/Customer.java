@@ -9,6 +9,7 @@ import javax.persistence.Id;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
+import java.util.UUID;
 
 @Entity
 @Getter
@@ -16,7 +17,11 @@ import javax.validation.constraints.Size;
 public class Customer {
 
     @Id
-    String customerId;
+    String customerId = UUID
+            .randomUUID()
+            .toString()
+            .replace("-","")
+            .toUpperCase();
 
     @NotEmpty
     String name;

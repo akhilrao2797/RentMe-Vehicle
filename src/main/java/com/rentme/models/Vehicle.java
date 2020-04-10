@@ -1,5 +1,9 @@
 package com.rentme.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonIgnoreType;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -11,6 +15,7 @@ import javax.validation.constraints.NotNull;
 @Entity
 @Getter
 @Setter
+@JsonIgnoreProperties()
 public class Vehicle {
 
     @Id
@@ -25,7 +30,9 @@ public class Vehicle {
     @NotNull
     long meterReading;
 
-    boolean isFree;
+    @NotNull
+    @JsonProperty("isFree")
+    boolean isFree = true;
 
     @NotNull
     int pricePerLitre;
