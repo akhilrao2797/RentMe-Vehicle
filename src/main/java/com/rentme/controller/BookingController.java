@@ -1,12 +1,15 @@
 package com.rentme.controller;
 
 import com.rentme.models.BookingDetails;
+import com.rentme.models.Vehicle;
 import com.rentme.services.VehicleBookingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.time.LocalDateTime;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/v1")
@@ -35,4 +38,17 @@ public class BookingController {
         return ResponseEntity.accepted().body(vehicleBookingService.addNewBooking(bookingDetails));
     }
 
+    @PutMapping("/update/booking/{bookingId}")
+    public ResponseEntity updateBookingInfo(@PathVariable String bookingId,
+                                            @RequestParam Optional<LocalDateTime> toTime,
+                                            @RequestParam Optional<Vehicle> vehicle){
+        return ResponseEntity
+                .accepted()
+                .body(vehicleBookingService.updateBooking(bookingId,toTime, vehicle));
+    }
+
+    @DeleteMapping("/add/booking/{bookingId}")
+    public ResponseEntity deleteBooking(@PathVariable String bookingId){
+        return ResponseEntity.accepted().body(vehicleBookingService.deletebooking(bookingId));
+    }
 }

@@ -1,12 +1,15 @@
 package com.rentme.services;
 
 import com.rentme.models.BookingDetails;
+import com.rentme.models.Vehicle;
 import com.rentme.repository.BookingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class VehicleBookingService {
@@ -27,6 +30,29 @@ public class VehicleBookingService {
     }
 
     public BookingDetails getBookingById(String bookingId) {
-        return bookingRepository.findByBookingId(bookingId);
+        return Optional.of(bookingRepository.findByBookingId(bookingId))
+                .orElseThrow(null);
+    }
+
+    public BookingDetails updateBooking(String bookingId,
+                                        Optional<LocalDateTime> toTime,
+                                        Optional<Vehicle> vehicle) {
+        BookingDetails bookingDetails = bookingRepository.findByBookingId(bookingId);
+        if(bookingDetails == null)
+            return null;
+        if(toTime.isPresent())
+            bookingDetails.setToTime(toTime.get());
+        if(vehicle.isPresent())
+            bookingDetails.setVehicle(vehicle.get());
+        bookingRepository.save(bookingDetails);
+        return bookingDetails;
+    }
+
+    public String deletebooking(String bookingId) {
+        BookingDetails bookingDetails = bookingRepository.findByBookingId(bookingId);
+        if(bookingDetails == null)
+            return "Booking id invalid";
+        bookingRepository.delete(bookingDetails);
+        return "Successfully deleted";
     }
 }
