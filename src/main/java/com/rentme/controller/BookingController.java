@@ -47,8 +47,8 @@ public class BookingController {
                 .body(vehicleBookingService.updateBooking(bookingId,toTime, vehicle));
     }
 
-    @DeleteMapping("/add/booking/{bookingId}")
+    @DeleteMapping("/delete/booking/{bookingId}")
     public ResponseEntity deleteBooking(@PathVariable String bookingId){
-        return ResponseEntity.accepted().body(vehicleBookingService.deletebooking(bookingId));
+        return ResponseEntity.accepted().body(vehicleBookingService.deleteBooking(bookingId));
     }
 }

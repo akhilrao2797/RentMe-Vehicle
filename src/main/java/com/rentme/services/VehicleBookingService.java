@@ -48,7 +48,7 @@ public class VehicleBookingService {
         return bookingDetails;
     }
 
-    public String deletebooking(String bookingId) {
+    public String deleteBooking(String bookingId) {
         BookingDetails bookingDetails = bookingRepository.findByBookingId(bookingId);
         if(bookingDetails == null)
             return "Booking id invalid";
