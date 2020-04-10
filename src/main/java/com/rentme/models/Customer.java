@@ -26,7 +26,7 @@ public class Customer {
     @NotEmpty
     String name;
 
-    @Size(min = 16, max = 16)
+    @Size(min = 12, max = 12)
     String aadharNumber;
 
     @Size(min = 10)

@@ -34,8 +34,12 @@ public class BookingController {
     }
 
     @PostMapping("/add/booking")
-    public ResponseEntity addBookingInfo(@Valid @RequestBody final BookingDetails bookingDetails){
-        return ResponseEntity.accepted().body(vehicleBookingService.addNewBooking(bookingDetails));
+    public ResponseEntity addBookingInfo(@Valid @RequestBody final BookingDetails bookingDetails,
+                                         @RequestParam final String customerId,
+                                         @RequestParam final String vehicleId){
+        return ResponseEntity
+                .accepted()
+                .body(vehicleBookingService.addNewBooking(bookingDetails, customerId, vehicleId));
     }
 
     @PutMapping("/update/booking/{bookingId}")

@@ -14,8 +14,18 @@ import java.util.Optional;
 @Service
 public class VehicleBookingService {
 
-    @Autowired
     BookingRepository bookingRepository;
+    CustomerService customerService;
+    VehicleService vehicleService;
+
+    @Autowired
+    VehicleBookingService(BookingRepository bookingRepository,
+                          CustomerService customerService,
+                          VehicleService vehicleService){
+        this.bookingRepository = bookingRepository;
+        this.customerService = customerService;
+        this.vehicleService = vehicleService;
+    }
 
     public List<BookingDetails> getAllBookings() {
         return bookingRepository.findAll();
@@ -25,7 +35,11 @@ public class VehicleBookingService {
         return bookingRepository.findByCustomer(customerId);
     }
 
-    public BookingDetails addNewBooking(BookingDetails bookingDetails) {
+    public BookingDetails addNewBooking(BookingDetails bookingDetails,
+                                        String customerId,
+                                        String vehicleId) {
+        bookingDetails.setCustomer(customerService.getCustomer(customerId).get());
+        bookingDetails.setVehicle(vehicleService.getVehicleDetails(vehicleId).get());
         return bookingRepository.save(bookingDetails);
     }
 

@@ -25,11 +25,11 @@ public class BookingDetails {
             .toUpperCase();
 
     @OneToOne
-    @JoinColumn(name = "customer_id")
+    @JoinColumn(name = "customer_id", nullable = false, referencedColumnName = "customerId")
     Customer customer;
 
     @OneToOne
-    @JoinColumn(name = "vehicle_id")
+    @JoinColumn(name = "vehicle_id", nullable = false, referencedColumnName = "registrationId")
     Vehicle vehicle;
 
     @PastOrPresent
