@@ -29,10 +29,10 @@ public class Vehicle {
 
     @NotNull
     long meterReading;
-
-    @NotNull
-    @JsonProperty("isFree")
-    boolean isFree = true;
+//
+//    @NotNull
+//    @JsonProperty("isFree")
+//    boolean isFree = true;
 
     @NotNull
     int pricePerLitre;
