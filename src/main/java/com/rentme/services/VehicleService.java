@@ -35,7 +35,7 @@ public class VehicleService {
 
     public String deleteVehicle(String vehicleId) {
         Optional<Vehicle> vehicle = vehicleRepository.findById(vehicleId);
-        if(vehicle.isPresent())
+        if(!vehicle.isPresent())
             return "Invalid Vehicle Id";
         vehicleRepository.deleteById(vehicleId);
         return "Successfully deleted";

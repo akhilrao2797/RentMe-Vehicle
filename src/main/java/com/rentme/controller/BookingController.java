@@ -19,17 +19,17 @@ public class BookingController {
     @Autowired
     VehicleBookingService vehicleBookingService;
 
-    @GetMapping("/get/bookings")
+    @GetMapping("/get/booking")
     public ResponseEntity getBookings(){
         return ResponseEntity.ok(vehicleBookingService.getAllBookings());
     }
 
-    @GetMapping("/get/bookings/{customer}")
+    @GetMapping("/get/booking/customer/{customerId}")
     public ResponseEntity getBookingsOfCustomer(@PathVariable final String customerId){
         return ResponseEntity.ok(vehicleBookingService.getBookingsOfCustomer(customerId));
     }
 
-    @GetMapping("/get/bookings/{bookingId}")
+    @GetMapping("/get/booking('{bookingId}')")
     public ResponseEntity getBookingById(@PathVariable final String bookingId){
         return ResponseEntity.ok(vehicleBookingService.getBookingById(bookingId));
     }

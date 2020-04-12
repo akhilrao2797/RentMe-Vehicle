@@ -4,6 +4,7 @@ import com.rentme.models.BookingDetails;
 import com.rentme.models.Vehicle;
 import com.rentme.repository.BookingRepository;
 import com.rentme.utils.Status;
+import com.rentme.validators.BookingRequestValidation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class VehicleBookingService {
@@ -33,7 +35,11 @@ public class VehicleBookingService {
     }
 
     public List<BookingDetails> getBookingsOfCustomer(String customerId) {
-        return bookingRepository.findByCustomer(customerId);
+        return bookingRepository
+                .findAll()
+                .stream()
+                .filter(booking -> booking.getCustomer().getCustomerId() == customerId)
+                .collect(Collectors.toList());
     }
 
     public BookingDetails addNewBooking(BookingDetails bookingDetails,
@@ -41,7 +47,9 @@ public class VehicleBookingService {
                                         String vehicleId) {
         bookingDetails.setCustomer(customerService.getCustomer(customerId).get());
         bookingDetails.setVehicle(vehicleService.getVehicleDetails(vehicleId).get());
-        return bookingRepository.save(bookingDetails);
+        if(BookingRequestValidation.validateRequest(bookingRepository,bookingDetails))
+            return bookingRepository.save(bookingDetails);
+        return null;
     }
 
     public BookingDetails getBookingById(String bookingId) {
