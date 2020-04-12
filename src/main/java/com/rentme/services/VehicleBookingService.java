@@ -3,6 +3,7 @@ package com.rentme.services;
 import com.rentme.models.BookingDetails;
 import com.rentme.models.Vehicle;
 import com.rentme.repository.BookingRepository;
+import com.rentme.utils.Status;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -50,7 +51,8 @@ public class VehicleBookingService {
 
     public BookingDetails updateBooking(String bookingId,
                                         Optional<LocalDateTime> toTime,
-                                        Optional<Vehicle> vehicle) {
+                                        Optional<Vehicle> vehicle,
+                                        Optional<Status> status) {
         BookingDetails bookingDetails = bookingRepository.findByBookingId(bookingId);
         if(bookingDetails == null)
             return null;
@@ -58,6 +60,8 @@ public class VehicleBookingService {
             bookingDetails.setToTime(toTime.get());
         if(vehicle.isPresent())
             bookingDetails.setVehicle(vehicle.get());
+        if(status.isPresent())
+            bookingDetails.setStatus(status.get().toString());
         bookingRepository.save(bookingDetails);
         return bookingDetails;
     }

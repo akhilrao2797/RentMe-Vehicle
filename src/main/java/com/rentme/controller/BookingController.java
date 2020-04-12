@@ -3,6 +3,7 @@ package com.rentme.controller;
 import com.rentme.models.BookingDetails;
 import com.rentme.models.Vehicle;
 import com.rentme.services.VehicleBookingService;
+import com.rentme.utils.Status;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -45,10 +46,11 @@ public class BookingController {
     @PutMapping("/update/booking/{bookingId}")
     public ResponseEntity updateBookingInfo(@PathVariable String bookingId,
                                             @RequestParam Optional<LocalDateTime> toTime,
-                                            @RequestParam Optional<Vehicle> vehicle){
+                                            @RequestParam Optional<Vehicle> vehicle,
+                                            @RequestParam Optional<Status> status){
         return ResponseEntity
                 .accepted()
-                .body(vehicleBookingService.updateBooking(bookingId,toTime, vehicle));
+                .body(vehicleBookingService.updateBooking(bookingId, toTime, vehicle, status));
     }
 
     @DeleteMapping("/delete/booking/{bookingId}")

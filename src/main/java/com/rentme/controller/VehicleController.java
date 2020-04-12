@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.swing.text.html.Option;
 import javax.validation.Valid;
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 @RestController
@@ -38,6 +39,12 @@ public class VehicleController {
                                         @RequestParam Optional<Integer> pricePerLitre){
         return ResponseEntity.
                 ok(vehicleService.updateVehicleDetails(vehicleId, meterReading, pricePerLitre));
+    }
+
+    @GetMapping("/free/vehicles")
+    public ResponseEntity getAllFreeVehicles(@RequestParam final LocalDateTime fromTime,
+                                             @RequestParam final LocalDateTime toTime){
+        return ResponseEntity.ok(vehicleService.getFreeVehicles(fromTime, toTime));
     }
 
 }
