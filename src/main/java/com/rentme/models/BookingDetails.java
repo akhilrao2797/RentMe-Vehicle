@@ -1,6 +1,7 @@
 package com.rentme.models;
 
 import com.rentme.utils.Status;
+import com.rentme.validators.StatusConstraint;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -47,7 +48,7 @@ public class BookingDetails {
     @NotNull
     LocalDateTime toTime;
 
-    @NotEmpty
+    @StatusConstraint
     Status status;
 
     public void setStatus(String status) {
