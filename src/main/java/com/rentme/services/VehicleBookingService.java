@@ -38,7 +38,7 @@ public class VehicleBookingService {
         return bookingRepository
                 .findAll()
                 .stream()
-                .filter(booking -> booking.getCustomer().getCustomerId() == customerId)
+                .filter(booking -> booking.getCustomer().getCustomerId().equals(customerId))
                 .collect(Collectors.toList());
     }
 

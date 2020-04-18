@@ -1,12 +1,12 @@
 package com.rentme.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.rentme.utils.CustomerStatus;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.UUID;
 
@@ -43,6 +43,13 @@ public class Customer {
     @Column(unique = true)
     @Size(min = 10, max = 10)
     String mobile;
+
+    @Enumerated(EnumType.STRING)
+    CustomerStatus status = CustomerStatus.ACTIVE;
+
+
+
+
 
     public String getCustomerId() {
         return customerId;
@@ -102,5 +109,13 @@ public class Customer {
 
     public void setMobile(String mobile) {
         this.mobile = mobile;
+    }
+
+    public CustomerStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(CustomerStatus status) {
+        this.status = status;
     }
 }
