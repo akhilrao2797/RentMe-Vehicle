@@ -16,6 +16,8 @@ public interface BookingRepository extends JpaRepository<BookingDetails, String>
     List<BookingDetails> findByCustomer(Customer customer);
     BookingDetails findByBookingId(String bookingId);
 
-    @Query("select bd.vehicle from BookingDetails bd where bd.fromTime >= ?1 and bd.toTime <= ?2 and (bd.status != ?3 and bd.status != ?4)")
-    List<Vehicle> findBookingsWithinTime(LocalDateTime fromTime, LocalDateTime toTime, Status statusCompleted, Status statusCancelled);
+    @Query("select v1 from Vehicle v1 left join BookingDetails bd on " +
+            "bd.vehicle = v1 where bd.fromTime >= ?1 and bd.toTime <= ?2" +
+            " and bd.status = ?3")
+    List<Vehicle> findBookingsWithinTime(LocalDateTime fromTime, LocalDateTime toTime, Status status);
 }

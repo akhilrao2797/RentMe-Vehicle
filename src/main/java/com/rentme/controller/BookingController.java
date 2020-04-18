@@ -5,6 +5,7 @@ import com.rentme.models.Vehicle;
 import com.rentme.services.VehicleBookingService;
 import com.rentme.utils.Status;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -45,7 +46,8 @@ public class BookingController {
 
     @PutMapping("/update/booking/{bookingId}")
     public ResponseEntity updateBookingInfo(@PathVariable String bookingId,
-                                            @RequestParam Optional<LocalDateTime> toTime,
+                                            @RequestParam
+                                            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) Optional<LocalDateTime> toTime,
                                             @RequestParam Optional<Vehicle> vehicle,
                                             @RequestParam Optional<Status> status){
         return ResponseEntity
