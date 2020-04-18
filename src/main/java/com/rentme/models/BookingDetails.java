@@ -1,5 +1,6 @@
 package com.rentme.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.rentme.utils.Status;
 import com.rentme.validators.StatusConstraint;
 
@@ -20,12 +21,14 @@ public class BookingDetails {
             .replace("-","")
             .toUpperCase();
 
-    @OneToOne(cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "customer_id", nullable = false, referencedColumnName = "customerId")
+    @JsonIgnore
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @JoinColumn(name = "customer_id", nullable = false)
     Customer customer;
 
-    @OneToOne(cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "vehicle_id", nullable = false, referencedColumnName = "registrationId")
+    @JsonIgnore
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @JoinColumn(name = "vehicle_id", nullable = false)
     Vehicle vehicle;
 
     @PastOrPresent

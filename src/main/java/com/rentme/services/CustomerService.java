@@ -2,6 +2,7 @@ package com.rentme.services;
 
 import com.rentme.models.Customer;
 import com.rentme.repository.CustomerRepository;
+import com.rentme.utils.CustomerStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -40,7 +41,9 @@ public class CustomerService {
         Optional<Customer> customer = customerRepository.findById(customerId);
         if(!customer.isPresent())
             return "Invalid Customer Id";
-        customerRepository.deleteById(customerId);
+        Customer currentCustomer = customer.get();
+        currentCustomer.setStatus(CustomerStatus.INACTIVE);
+        customerRepository.save(currentCustomer);
         return "Successfully deleted";
     }
 
