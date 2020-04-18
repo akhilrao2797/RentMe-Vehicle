@@ -3,10 +3,7 @@ package com.rentme.models;
 import com.rentme.utils.Status;
 import com.rentme.validators.StatusConstraint;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 import javax.validation.constraints.FutureOrPresent;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PastOrPresent;
@@ -23,11 +20,11 @@ public class BookingDetails {
             .replace("-","")
             .toUpperCase();
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "customer_id", nullable = false, referencedColumnName = "customerId")
     Customer customer;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "vehicle_id", nullable = false, referencedColumnName = "registrationId")
     Vehicle vehicle;
 
@@ -43,6 +40,7 @@ public class BookingDetails {
     @NotNull
     LocalDateTime toTime;
 
+    @Enumerated(EnumType.STRING)
     @StatusConstraint
     Status status;
 

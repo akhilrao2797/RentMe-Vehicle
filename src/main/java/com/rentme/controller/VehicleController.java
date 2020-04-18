@@ -3,6 +3,7 @@ package com.rentme.controller;
 import com.rentme.models.Vehicle;
 import com.rentme.services.VehicleService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -42,8 +43,8 @@ public class VehicleController {
     }
 
     @GetMapping("/free/vehicles")
-    public ResponseEntity getAllFreeVehicles(@RequestParam final LocalDateTime fromTime,
-                                             @RequestParam final LocalDateTime toTime){
+    public ResponseEntity getAllFreeVehicles(@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime fromTime,
+                                             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime toTime){
         return ResponseEntity.ok(vehicleService.getFreeVehicles(fromTime, toTime));
     }
 

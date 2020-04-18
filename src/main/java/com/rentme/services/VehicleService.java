@@ -45,7 +45,7 @@ public class VehicleService {
                                         Optional<Long> meterReading,
                                         Optional<Integer> pricePerLitre) {
         Optional<Vehicle> vehicle = vehicleRepository.findById(vehicleId);
-        if(vehicle.isPresent())
+        if(!vehicle.isPresent())
             return null;
         Vehicle currentVehicle = vehicle.get();
         if(pricePerLitre.isPresent())
@@ -58,7 +58,7 @@ public class VehicleService {
 
     public List<Vehicle> getFreeVehicles(LocalDateTime fromTime, LocalDateTime toTime) {
         List<Vehicle> bookedVehicles = bookingRepository
-                .findBookingsWithinTime(fromTime, toTime, Status.COMPLETED, Status.CANCELLED);
+                .findBookingsWithinTime(fromTime, toTime, Status.SUBMITTED);
         List<Vehicle> vehicles = vehicleRepository.findAll();
         return vehicles
                 .stream()

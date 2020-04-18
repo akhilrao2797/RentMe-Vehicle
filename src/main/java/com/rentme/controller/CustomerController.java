@@ -25,9 +25,9 @@ public class CustomerController {
 
     @PutMapping("/update/customer/{customerId}")
     public ResponseEntity updateCustomer(@PathVariable String customerId,
-                                            @RequestParam Optional<String> address,
-                                            @RequestParam Optional<String> mobile,
-                                            @RequestParam Optional<String> emailId){
+                                            @RequestParam("address") Optional<String> address,
+                                            @RequestParam("mobile") Optional<String> mobile,
+                                            @RequestParam("email") Optional<String> emailId){
         return ResponseEntity
                 .accepted()
                 .body(customerService.updateCustomerDetails(customerId, address, mobile, emailId));
