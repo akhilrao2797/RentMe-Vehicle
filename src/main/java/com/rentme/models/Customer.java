@@ -1,7 +1,9 @@
 package com.rentme.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.rentme.utils.CustomerStatus;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -37,8 +39,13 @@ public class Customer {
     @JsonIgnore
     String coupon;
 
+    @Column(unique = true, nullable = false)
     @Email
     String emailId;
+
+    @NotEmpty
+    @JsonProperty("password")
+    String password;
 
     @Column(unique = true)
     @Size(min = 10, max = 10)
@@ -117,5 +124,13 @@ public class Customer {
 
     public void setStatus(CustomerStatus status) {
         this.status = status;
+    }
+
+    public String getPassword(){
+        return password;
+    }
+
+    public void setPassword(String password){
+        this.password = new BCryptPasswordEncoder().encode(password);
     }
 }

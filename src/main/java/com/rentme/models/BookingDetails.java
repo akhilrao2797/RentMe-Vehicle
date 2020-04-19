@@ -21,12 +21,10 @@ public class BookingDetails {
             .replace("-","")
             .toUpperCase();
 
-    @JsonIgnore
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     @JoinColumn(name = "customer_id", nullable = false)
     Customer customer;
 
-    @JsonIgnore
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     @JoinColumn(name = "vehicle_id", nullable = false)
     Vehicle vehicle;
