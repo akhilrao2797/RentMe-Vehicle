@@ -14,11 +14,7 @@ import java.util.UUID;
 public class Customer {
 
     @Id
-    String customerId = UUID
-            .randomUUID()
-            .toString()
-            .replace("-","")
-            .toUpperCase();
+    String customerId;
 
     @NotEmpty
     String name;
@@ -34,7 +30,6 @@ public class Customer {
     @Column(unique = true)
     String drivingLicense;
 
-    @JsonIgnore
     String coupon;
 
     @Email
@@ -45,7 +40,7 @@ public class Customer {
     String mobile;
 
     @Enumerated(EnumType.STRING)
-    CustomerStatus status = CustomerStatus.ACTIVE;
+    CustomerStatus status;
 
 
 
@@ -53,6 +48,14 @@ public class Customer {
 
     public String getCustomerId() {
         return customerId;
+    }
+
+    public void setCustomerId() {
+        this.customerId = UUID
+                .randomUUID()
+                .toString()
+                .replace("-","")
+                .toUpperCase();
     }
 
     public String getName() {

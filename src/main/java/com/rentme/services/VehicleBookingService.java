@@ -1,12 +1,11 @@
 package com.rentme.services;
 
-import com.rentme.models.BookingDetails;
+import com.rentme.models.Transaction;
 import com.rentme.models.Vehicle;
-import com.rentme.repository.BookingRepository;
+import com.rentme.repository.TransactionRepository;
 import com.rentme.utils.Status;
 import com.rentme.validators.BookingRequestValidation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -17,68 +16,68 @@ import java.util.stream.Collectors;
 @Service
 public class VehicleBookingService {
 
-    BookingRepository bookingRepository;
+    TransactionRepository transactionRepository;
     CustomerService customerService;
     VehicleService vehicleService;
 
     @Autowired
-    VehicleBookingService(BookingRepository bookingRepository,
+    VehicleBookingService(TransactionRepository transactionRepository,
                           CustomerService customerService,
                           VehicleService vehicleService){
-        this.bookingRepository = bookingRepository;
+        this.transactionRepository = transactionRepository;
         this.customerService = customerService;
         this.vehicleService = vehicleService;
     }
 
-    public List<BookingDetails> getAllBookings() {
-        return bookingRepository.findAll();
+    public List<Transaction> getAllBookings() {
+        return transactionRepository.findAll();
     }
 
-    public List<BookingDetails> getBookingsOfCustomer(String customerId) {
-        return bookingRepository
+    public List<Transaction> getBookingsOfCustomer(String customerId) {
+        return transactionRepository
                 .findAll()
                 .stream()
                 .filter(booking -> booking.getCustomer().getCustomerId().equals(customerId))
                 .collect(Collectors.toList());
     }
 
-    public BookingDetails addNewBooking(BookingDetails bookingDetails,
-                                        String customerId,
-                                        String vehicleId) {
-        bookingDetails.setCustomer(customerService.getCustomer(customerId).get());
-        bookingDetails.setVehicle(vehicleService.getVehicleDetails(vehicleId).get());
-        if(BookingRequestValidation.validateRequest(bookingRepository,bookingDetails))
-            return bookingRepository.save(bookingDetails);
+    public Transaction addNewBooking(Transaction transaction) {
+        transaction.setCustomer(customerService.getCustomer(transaction.getCustomer().getCustomerId()));
+        transaction.setVehicle(vehicleService.getVehicleDetails(transaction.getVehicle().getRegistrationId()).get());
+        if(BookingRequestValidation.validateRequest(transactionRepository, transaction)) {
+            transaction.setBookingId();
+            return transactionRepository.save(transaction);
+        }
         return null;
     }
 
-    public BookingDetails getBookingById(String bookingId) {
-        return Optional.of(bookingRepository.findByBookingId(bookingId))
+    public Transaction getBookingById(String bookingId) {
+        return Optional.of(transactionRepository.findByBookingId(bookingId))
                 .orElseThrow(null);
     }
 
-    public BookingDetails updateBooking(String bookingId,
-                                        Optional<LocalDateTime> toTime,
-                                        Optional<Vehicle> vehicle,
-                                        Optional<Status> status) {
-        BookingDetails bookingDetails = bookingRepository.findByBookingId(bookingId);
-        if(bookingDetails == null)
+    public Transaction updateBooking(String bookingId,
+                                     Optional<LocalDateTime> toTime,
+                                     Optional<Vehicle> vehicle,
+                                     Optional<Status> status) {
+        Transaction transaction = transactionRepository.findByBookingId(bookingId);
+        if(transaction == null)
             return null;
         if(toTime.isPresent())
-            bookingDetails.setToTime(toTime.get());
+            transaction.setToTime(toTime.get());
         if(vehicle.isPresent())
-            bookingDetails.setVehicle(vehicle.get());
+            transaction.setVehicle(vehicle.get());
         if(status.isPresent())
-            bookingDetails.setStatus(status.get().toString());
-        bookingRepository.save(bookingDetails);
-        return bookingDetails;
+            transaction.setStatus(status.get().toString());
+        transactionRepository.save(transaction);
+        return transaction;
     }
 
     public String deleteBooking(String bookingId) {
-        BookingDetails bookingDetails = bookingRepository.findByBookingId(bookingId);
-        if(bookingDetails == null)
+        Transaction transaction = transactionRepository.findByBookingId(bookingId);
+        if(transaction == null)
             return "Booking id invalid";
-        bookingRepository.delete(bookingDetails);
+        transactionRepository.delete(transaction);
         return "Successfully deleted";
     }
 }

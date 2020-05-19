@@ -1,38 +1,32 @@
 package com.rentme.models;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.rentme.utils.Status;
 import com.rentme.validators.StatusConstraint;
 
 import javax.persistence.*;
 import javax.validation.constraints.FutureOrPresent;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Null;
 import javax.validation.constraints.PastOrPresent;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
-public class BookingDetails {
+@JsonIgnoreProperties(value = {"bookingTime", "status"}, allowGetters = true)
+public class Transaction {
 
     @Id
-    String bookingId = UUID
-            .randomUUID()
-            .toString()
-            .replace("-","")
-            .toUpperCase();
+    String bookingId;
 
-    @JsonIgnore
-    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "customer_id", nullable = false)
     Customer customer;
 
-    @JsonIgnore
-    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "vehicle_id", nullable = false)
     Vehicle vehicle;
 
-    @PastOrPresent
-    @NotNull
     LocalDateTime bookingTime;
 
     @FutureOrPresent
@@ -44,7 +38,7 @@ public class BookingDetails {
     LocalDateTime toTime;
 
     @Enumerated(EnumType.STRING)
-    @StatusConstraint
+//    @StatusConstraint
     Status status;
 
     public void setStatus(String status) {
@@ -55,12 +49,17 @@ public class BookingDetails {
         }
     }
 
+
+
     public String getBookingId() {
         return bookingId;
     }
 
-    public void setBookingId(String bookingId) {
-        this.bookingId = bookingId;
+    public void setBookingId() {
+        this.bookingId = UUID
+                .randomUUID()
+                .toString()
+                .toLowerCase();
     }
 
     public Customer getCustomer() {

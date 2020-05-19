@@ -15,6 +15,8 @@ public class CustomerService {
     CustomerRepository customerRepository;
 
     public Customer postCustomer(Customer customer) {
+        customer.setCustomerId();
+        customer.setStatus(CustomerStatus.ACTIVE);
         return customerRepository.save(customer);
     }
 
@@ -47,7 +49,11 @@ public class CustomerService {
         return "Successfully deleted";
     }
 
-    public Optional<Customer> getCustomer(String customerId) {
-        return customerRepository.findById(customerId);
+    public Customer getCustomer(String customerId) {
+        Optional<Customer> customer = null;
+        if((customer = customerRepository.findById(customerId)).isPresent())
+            return customer.get();
+        else
+            return null;
     }
 }

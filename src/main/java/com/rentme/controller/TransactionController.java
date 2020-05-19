@@ -1,6 +1,6 @@
 package com.rentme.controller;
 
-import com.rentme.models.BookingDetails;
+import com.rentme.models.Transaction;
 import com.rentme.models.Vehicle;
 import com.rentme.services.VehicleBookingService;
 import com.rentme.utils.Status;
@@ -15,7 +15,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/v1")
-public class BookingController {
+public class TransactionController {
 
     @Autowired
     VehicleBookingService vehicleBookingService;
@@ -36,12 +36,10 @@ public class BookingController {
     }
 
     @PostMapping("/add/booking")
-    public ResponseEntity addBookingInfo(@Valid @RequestBody final BookingDetails bookingDetails,
-                                         @RequestParam final String customerId,
-                                         @RequestParam final String vehicleId){
+    public ResponseEntity addBookingInfo(@Valid @RequestBody final Transaction transaction){
         return ResponseEntity
                 .accepted()
-                .body(vehicleBookingService.addNewBooking(bookingDetails, customerId, vehicleId));
+                .body(vehicleBookingService.addNewBooking(transaction));
     }
 
     @PutMapping("/update/booking/{bookingId}")
