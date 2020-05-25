@@ -20,7 +20,9 @@ public class CustomerController {
 
     @PostMapping("/add/customer")
     public ResponseEntity addCustomer(@Valid @RequestBody final Customer customer){
-        return ResponseEntity.ok(customerService.postCustomer(customer));
+        return ResponseEntity
+                .accepted()
+                .body(customerService.postCustomer(customer));
     }
 
     @PutMapping("/update/customer/{customerId}")
@@ -43,5 +45,11 @@ public class CustomerController {
     @GetMapping("/get/customer/{customerId}")
     public ResponseEntity getCustomerInfo(@PathVariable final String customerId){
         return ResponseEntity.ok(customerService.getCustomer(customerId));
+    }
+
+    @GetMapping("/get/customers")
+    public ResponseEntity getCustomersBasedOnStatus(@RequestParam final Optional<String> status){
+        return ResponseEntity
+                .ok(customerService.getCustomers(status));
     }
 }

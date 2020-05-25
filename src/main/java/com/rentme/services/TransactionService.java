@@ -14,16 +14,16 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
-public class VehicleBookingService {
+public class TransactionService {
 
     TransactionRepository transactionRepository;
     CustomerService customerService;
     VehicleService vehicleService;
 
     @Autowired
-    VehicleBookingService(TransactionRepository transactionRepository,
-                          CustomerService customerService,
-                          VehicleService vehicleService){
+    TransactionService(TransactionRepository transactionRepository,
+                       CustomerService customerService,
+                       VehicleService vehicleService){
         this.transactionRepository = transactionRepository;
         this.customerService = customerService;
         this.vehicleService = vehicleService;
@@ -46,6 +46,8 @@ public class VehicleBookingService {
         transaction.setVehicle(vehicleService.getVehicleDetails(transaction.getVehicle().getRegistrationId()).get());
         if(BookingRequestValidation.validateRequest(transactionRepository, transaction)) {
             transaction.setBookingId();
+            transaction.setBookingId();
+            transaction.setStatus(Status.SUBMITTED);
             return transactionRepository.save(transaction);
         }
         return null;

@@ -20,8 +20,10 @@ public class VehicleController {
     VehicleService vehicleService;
 
     @PostMapping("/add/vehicle")
-    public Vehicle addVehicle(@Valid @RequestBody final Vehicle vehicle){
-        return vehicleService.postVehicle(vehicle);
+    public ResponseEntity addVehicle(@Valid @RequestBody final Vehicle vehicle){
+        return ResponseEntity
+                .accepted()
+                .body(vehicleService.postVehicle(vehicle));
     }
 
     @GetMapping("/get/vehicle/{vehicleId}")
@@ -45,7 +47,8 @@ public class VehicleController {
     @GetMapping("/free/vehicles")
     public ResponseEntity getAllFreeVehicles(@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime fromTime,
                                              @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime toTime){
-        return ResponseEntity.ok(vehicleService.getFreeVehicles(fromTime, toTime));
+        return ResponseEntity
+                .ok(vehicleService.getFreeVehicles(fromTime, toTime));
     }
 
 }

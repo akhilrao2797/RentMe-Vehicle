@@ -1,11 +1,14 @@
 package com.rentme.models;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+
+import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 @Entity
+@Cacheable
+@org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Vehicle {
 
     @Id
@@ -14,6 +17,7 @@ public class Vehicle {
     @NotEmpty
     String model;
 
+    @Column(unique = true)
     @NotEmpty
     String rc;
 
@@ -22,6 +26,8 @@ public class Vehicle {
 
     @NotNull
     int pricePerLitre;
+
+
 
     public String getRegistrationId() {
         return registrationId;

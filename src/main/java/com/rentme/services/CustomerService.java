@@ -6,6 +6,8 @@ import com.rentme.utils.CustomerStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -55,5 +57,25 @@ public class CustomerService {
             return customer.get();
         else
             return null;
+    }
+
+    public List<Customer> getCustomers(Optional<String> status) {
+        if(!status.isPresent())
+            return customerRepository.findAll();
+        List<Customer> customerList = new ArrayList<>();
+        switch(status.get()){
+            case "ACTIVE" :
+                customerList.addAll(customerRepository.findByStatus(CustomerStatus.ACTIVE));
+                break;
+            case "INACTIVE":
+                customerList.addAll(customerRepository.findByStatus(CustomerStatus.INACTIVE));
+                break;
+            case "BLOCKED":
+                customerList.addAll(customerRepository.findByStatus(CustomerStatus.BLOCKED));
+                break;
+            default:
+                customerList.addAll(customerRepository.findAll());
+        }
+        return customerList;
     }
 }

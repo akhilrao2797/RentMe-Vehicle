@@ -11,6 +11,7 @@ public class Feedback {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
+    @JoinColumn(name = "transaction_id")
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     Transaction transactionId;
 

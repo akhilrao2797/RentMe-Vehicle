@@ -38,19 +38,18 @@ public class Transaction {
     LocalDateTime toTime;
 
     @Enumerated(EnumType.STRING)
-//    @StatusConstraint
     Status status;
 
-    public void setStatus(String status) {
-        switch(status){
-            case "SUBMITTED": this.status = Status.SUBMITTED;break;
-            case "CANCELLED": this.status = Status.CANCELLED;break;
-            case "COMPLETED": this.status = Status.COMPLETED;break;
-        }
-    }
 
 
-
+//    public void setStatus(String status) {
+//        switch(status){
+//            case "SUBMITTED": this.status = Status.SUBMITTED;break;
+//            case "CANCELLED": this.status = Status.CANCELLED;break;
+//            case "COMPLETED": this.status = Status.COMPLETED;break;
+//        }
+//    }
+//
     public String getBookingId() {
         return bookingId;
     }
