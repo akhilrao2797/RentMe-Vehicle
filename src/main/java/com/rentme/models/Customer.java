@@ -1,24 +1,24 @@
 package com.rentme.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.rentme.utils.CustomerStatus;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.UUID;
 
 @Entity
+@Cacheable
+@org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+@JsonPropertyOrder({"customerId", "name", "mobile", "emailId", "drivingLicense", "aadharNumber", "address", "status", "coupon"})
 public class Customer {
 
     @Id
-    String customerId = UUID
-            .randomUUID()
-            .toString()
-            .replace("-","")
-            .toUpperCase();
+    String customerId;
 
     @NotEmpty
     String name;
@@ -34,7 +34,6 @@ public class Customer {
     @Column(unique = true)
     String drivingLicense;
 
-    @JsonIgnore
     String coupon;
 
     @Email
@@ -45,14 +44,23 @@ public class Customer {
     String mobile;
 
     @Enumerated(EnumType.STRING)
-    CustomerStatus status = CustomerStatus.ACTIVE;
+    CustomerStatus status;
 
-
+    @JsonIgnore
+    String password;
 
 
 
     public String getCustomerId() {
         return customerId;
+    }
+
+    public void setCustomerId() {
+        this.customerId = UUID
+                .randomUUID()
+                .toString()
+                .replace("-","")
+                .toUpperCase();
     }
 
     public String getName() {
@@ -117,5 +125,13 @@ public class Customer {
 
     public void setStatus(CustomerStatus status) {
         this.status = status;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }

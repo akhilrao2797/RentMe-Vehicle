@@ -1,7 +1,9 @@
 package com.rentme.utils;
 
+import com.fasterxml.jackson.annotation.JsonEnumDefaultValue;
+
 public enum Status {
-    SUBMITTED,
+    @JsonEnumDefaultValue SUBMITTED,
     COMPLETED,
     CANCELLED
 }

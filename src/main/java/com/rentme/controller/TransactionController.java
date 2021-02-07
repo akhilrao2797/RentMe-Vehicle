@@ -1,8 +1,8 @@
 package com.rentme.controller;
 
-import com.rentme.models.BookingDetails;
+import com.rentme.models.Transaction;
 import com.rentme.models.Vehicle;
-import com.rentme.services.VehicleBookingService;
+import com.rentme.services.TransactionService;
 import com.rentme.utils.Status;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -15,33 +15,31 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/v1")
-public class BookingController {
+public class TransactionController {
 
     @Autowired
-    VehicleBookingService vehicleBookingService;
+    TransactionService transactionService;
 
     @GetMapping("/get/booking")
     public ResponseEntity getBookings(){
-        return ResponseEntity.ok(vehicleBookingService.getAllBookings());
+        return ResponseEntity.ok(transactionService.getAllBookings());
     }
 
     @GetMapping("/get/booking/customer/{customerId}")
     public ResponseEntity getBookingsOfCustomer(@PathVariable final String customerId){
-        return ResponseEntity.ok(vehicleBookingService.getBookingsOfCustomer(customerId));
+        return ResponseEntity.ok(transactionService.getBookingsOfCustomer(customerId));
     }
 
     @GetMapping("/get/booking('{bookingId}')")
     public ResponseEntity getBookingById(@PathVariable final String bookingId){
-        return ResponseEntity.ok(vehicleBookingService.getBookingById(bookingId));
+        return ResponseEntity.ok(transactionService.getBookingById(bookingId));
     }
 
     @PostMapping("/add/booking")
-    public ResponseEntity addBookingInfo(@Valid @RequestBody final BookingDetails bookingDetails,
-                                         @RequestParam final String customerId,
-                                         @RequestParam final String vehicleId){
+    public ResponseEntity addBookingInfo(@Valid @RequestBody final Transaction transaction){
         return ResponseEntity
                 .accepted()
-                .body(vehicleBookingService.addNewBooking(bookingDetails, customerId, vehicleId));
+                .body(transactionService.addNewBooking(transaction));
     }
 
     @PutMapping("/update/booking/{bookingId}")
@@ -52,11 +50,11 @@ public class BookingController {
                                             @RequestParam Optional<Status> status){
         return ResponseEntity
                 .accepted()
-                .body(vehicleBookingService.updateBooking(bookingId, toTime, vehicle, status));
+                .body(transactionService.updateBooking(bookingId, toTime, vehicle, status));
     }
 
     @DeleteMapping("/delete/booking/{bookingId}")
     public ResponseEntity deleteBooking(@PathVariable String bookingId){
-        return ResponseEntity.accepted().body(vehicleBookingService.deleteBooking(bookingId));
+        return ResponseEntity.accepted().body(transactionService.deleteBooking(bookingId));
     }
 }

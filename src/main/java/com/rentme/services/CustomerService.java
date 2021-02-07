@@ -6,6 +6,8 @@ import com.rentme.utils.CustomerStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -15,6 +17,8 @@ public class CustomerService {
     CustomerRepository customerRepository;
 
     public Customer postCustomer(Customer customer) {
+        customer.setCustomerId();
+        customer.setStatus(CustomerStatus.ACTIVE);
         return customerRepository.save(customer);
     }
 
@@ -47,7 +51,31 @@ public class CustomerService {
         return "Successfully deleted";
     }
 
-    public Optional<Customer> getCustomer(String customerId) {
-        return customerRepository.findById(customerId);
+    public Customer getCustomer(String customerId) {
+        Optional<Customer> customer = null;
+        if((customer = customerRepository.findById(customerId)).isPresent())
+            return customer.get();
+        else
+            return null;
+    }
+
+    public List<Customer> getCustomers(Optional<String> status) {
+        if(!status.isPresent())
+            return customerRepository.findAll();
+        List<Customer> customerList = new ArrayList<>();
+        switch(status.get()){
+            case "ACTIVE" :
+                customerList.addAll(customerRepository.findByStatus(CustomerStatus.ACTIVE));
+                break;
+            case "INACTIVE":
+                customerList.addAll(customerRepository.findByStatus(CustomerStatus.INACTIVE));
+                break;
+            case "BLOCKED":
+                customerList.addAll(customerRepository.findByStatus(CustomerStatus.BLOCKED));
+                break;
+            default:
+                customerList.addAll(customerRepository.findAll());
+        }
+        return customerList;
     }
 }
