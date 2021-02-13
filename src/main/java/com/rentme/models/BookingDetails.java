@@ -52,6 +52,7 @@ public class BookingDetails {
             case "SUBMITTED": this.status = Status.SUBMITTED;break;
             case "CANCELLED": this.status = Status.CANCELLED;break;
             case "COMPLETED": this.status = Status.COMPLETED;break;
+            default : this.status = Status.ERROR;
         }
     }
 

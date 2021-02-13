@@ -12,8 +12,6 @@ public class StatusValidator implements ConstraintValidator<StatusConstraint, St
 
     @Override
     public boolean isValid(Status status, ConstraintValidatorContext constraintValidatorContext) {
-        if(status != null)
-            return true;
-        return false;
+        return status!=null ;
     }
 }

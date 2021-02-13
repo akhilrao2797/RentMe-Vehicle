@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -21,22 +22,22 @@ public class BookingController {
     VehicleBookingService vehicleBookingService;
 
     @GetMapping("/get/booking")
-    public ResponseEntity getBookings(){
+    public ResponseEntity<List<BookingDetails>> getBookings(){
         return ResponseEntity.ok(vehicleBookingService.getAllBookings());
     }
 
     @GetMapping("/get/booking/customer/{customerId}")
-    public ResponseEntity getBookingsOfCustomer(@PathVariable final String customerId){
+    public ResponseEntity<List<BookingDetails>> getBookingsOfCustomer(@PathVariable final String customerId){
         return ResponseEntity.ok(vehicleBookingService.getBookingsOfCustomer(customerId));
     }
 
     @GetMapping("/get/booking('{bookingId}')")
-    public ResponseEntity getBookingById(@PathVariable final String bookingId){
+    public ResponseEntity<BookingDetails> getBookingById(@PathVariable final String bookingId){
         return ResponseEntity.ok(vehicleBookingService.getBookingById(bookingId));
     }
 
     @PostMapping("/add/booking")
-    public ResponseEntity addBookingInfo(@Valid @RequestBody final BookingDetails bookingDetails,
+    public ResponseEntity<BookingDetails> addBookingInfo(@Valid @RequestBody final BookingDetails bookingDetails,
                                          @RequestParam final String customerId,
                                          @RequestParam final String vehicleId){
         return ResponseEntity
@@ -45,7 +46,7 @@ public class BookingController {
     }
 
     @PutMapping("/update/booking/{bookingId}")
-    public ResponseEntity updateBookingInfo(@PathVariable String bookingId,
+    public ResponseEntity<BookingDetails> updateBookingInfo(@PathVariable String bookingId,
                                             @RequestParam
                                             @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) Optional<LocalDateTime> toTime,
                                             @RequestParam Optional<Vehicle> vehicle,
@@ -56,7 +57,7 @@ public class BookingController {
     }
 
     @DeleteMapping("/delete/booking/{bookingId}")
-    public ResponseEntity deleteBooking(@PathVariable String bookingId){
+    public ResponseEntity<String> deleteBooking(@PathVariable String bookingId){
         return ResponseEntity.accepted().body(vehicleBookingService.deleteBooking(bookingId));
     }
 }

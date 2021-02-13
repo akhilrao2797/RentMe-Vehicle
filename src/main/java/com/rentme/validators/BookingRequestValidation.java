@@ -3,7 +3,6 @@ package com.rentme.validators;
 import com.rentme.models.BookingDetails;
 import com.rentme.repository.BookingRepository;
 import com.rentme.utils.Status;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
@@ -23,11 +22,9 @@ public class BookingRequestValidation {
                         !booking.getToTime().isAfter(bookingDetails.getToTime()) &&
                         !bookingDetails.getStatus().equals(Status.SUBMITTED))
                 .count();
-        if(count == 0 &&
+        return count == 0 &&
                 bookingDetails.getFromTime().isBefore(bookingDetails.getToTime()) &&
-                !bookingDetails.getFromTime().isBefore(LocalDateTime.now()))
-            return true;
-        return false;
+                !bookingDetails.getFromTime().isBefore(LocalDateTime.now());
     }
 }
 
