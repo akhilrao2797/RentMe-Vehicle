@@ -6,11 +6,11 @@ import com.rentme.repository.BookingRepository;
 import com.rentme.utils.Status;
 import com.rentme.validators.BookingRequestValidation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -46,7 +46,11 @@ public class VehicleBookingService {
                                         String customerId,
                                         String vehicleId) {
         bookingDetails.setCustomer(customerService.getCustomer(customerId).get());
-        bookingDetails.setVehicle(vehicleService.getVehicleDetails(vehicleId).get());
+        Optional<Vehicle> vehicleDetails = vehicleService.getVehicleDetails(vehicleId);
+        if(vehicleDetails.isPresent())
+            bookingDetails.setVehicle(vehicleDetails.get());
+        else
+            throw new NoSuchElementException("Vehicle does not exist");
         if(BookingRequestValidation.validateRequest(bookingRepository,bookingDetails))
             return bookingRepository.save(bookingDetails);
         return null;

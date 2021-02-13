@@ -7,9 +7,9 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.swing.text.html.Option;
 import javax.validation.Valid;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -25,17 +25,17 @@ public class VehicleController {
     }
 
     @GetMapping("/get/vehicle/{vehicleId}")
-    public ResponseEntity getVehicle(@PathVariable final String vehicleId){
+    public ResponseEntity<Optional<Vehicle>> getVehicle(@PathVariable final String vehicleId){
         return ResponseEntity.ok(vehicleService.getVehicleDetails(vehicleId));
     }
 
     @DeleteMapping("/delete/vehicle/{vehicleId}")
-    public ResponseEntity deleteVehicle(@PathVariable final String vehicleId){
+    public ResponseEntity<String> deleteVehicle(@PathVariable final String vehicleId){
         return ResponseEntity.ok(vehicleService.deleteVehicle(vehicleId));
     }
 
     @PutMapping("/update/vehicle/{vehicleId}")
-    public ResponseEntity updateVehicle(@PathVariable final String vehicleId,
+    public ResponseEntity<Vehicle> updateVehicle(@PathVariable final String vehicleId,
                                         @RequestParam Optional<Long> meterReading,
                                         @RequestParam Optional<Integer> pricePerLitre){
         return ResponseEntity.
@@ -43,8 +43,8 @@ public class VehicleController {
     }
 
     @GetMapping("/free/vehicles")
-    public ResponseEntity getAllFreeVehicles(@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime fromTime,
-                                             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime toTime){
+    public ResponseEntity<List<Vehicle>> getAllFreeVehicles(@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime fromTime,
+                                                            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime toTime){
         return ResponseEntity.ok(vehicleService.getFreeVehicles(fromTime, toTime));
     }
 

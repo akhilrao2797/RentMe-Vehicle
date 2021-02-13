@@ -1,6 +1,5 @@
 package com.rentme.services;
 
-import com.rentme.models.BookingDetails;
 import com.rentme.models.Vehicle;
 import com.rentme.repository.BookingRepository;
 import com.rentme.repository.VehicleRepository;
