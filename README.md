@@ -12,5 +12,5 @@ This is a Java - based project that allows the user to create, update, and delet
 - clients
 - vehicles
 
-Furthermore, it provides the function of research inside the database either by customer, vehicle or booking ID. Vehicles that are available to be rent
+Furthermore, it provides the function of research inside the database (built in MySQL) either by customer, vehicle or booking ID. Vehicles that are available to be rent
 can also be seen.
