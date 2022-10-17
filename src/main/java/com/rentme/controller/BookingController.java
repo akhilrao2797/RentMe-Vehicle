@@ -16,7 +16,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/v1")
-public class BookingController {
+public class TransactionController {
 
     @Autowired
     VehicleBookingService vehicleBookingService;
