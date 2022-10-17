@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Component
-public class BookingRequestValidation {
+public class TransactionRequestValidation {
 
     public static boolean validateRequest(BookingRepository bookingRepository,
                                           BookingDetails bookingDetails) {
