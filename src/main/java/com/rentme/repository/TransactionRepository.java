@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Repository
-public interface BookingRepository extends JpaRepository<BookingDetails, String> {
+public interface TransactionRepository extends JpaRepository<BookingDetails, String> {
     List<BookingDetails> findByCustomer(Customer customer);
     BookingDetails findByBookingId(String bookingId);
 
