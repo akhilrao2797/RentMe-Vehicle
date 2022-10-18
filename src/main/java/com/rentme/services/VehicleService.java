@@ -28,10 +28,12 @@ public class VehicleService {
         return vehicleRepository.save(vehicle);
     }
 
+    // Funtion to get vehicle details
     public Optional<Vehicle> getVehicleDetails(String vehicleId) {
         return vehicleRepository.findById(vehicleId);
     }
 
+    // Funtion to delete a vehicle detail
     public String deleteVehicle(String vehicleId) {
         Optional<Vehicle> vehicle = vehicleRepository.findById(vehicleId);
         if(!vehicle.isPresent())
@@ -40,6 +42,7 @@ public class VehicleService {
         return "Successfully deleted";
     }
 
+    // Funtion to update vehicle details
     public Vehicle updateVehicleDetails(String vehicleId,
                                         Optional<Long> meterReading,
                                         Optional<Integer> pricePerLitre) {

@@ -13,6 +13,7 @@ public class CustomException implements Serializable {
     private static ResourceBundle resourceBundler =
             ResourceBundle.getBundle("i18n/MessageBundle");
 
+    // Method to generate custom exception with status, errorId and messageCode
     public CustomException(int status, int errorId, String messageCode) {
         this.status = status;
         this.errorId = errorId;
@@ -21,22 +22,27 @@ public class CustomException implements Serializable {
         this.message = resourceBundler.getObject(messageCode).toString();
     }
 
+    // Get Status
     public int getStatus() {
         return status;
     }
 
+    // Get ErrorId
     public int getErrorId() {
         return errorId;
     }
 
+    // Get MessageCode
     public String getMessageCode() {
         return messageCode;
     }
 
+    // Get Timestamp
     public Timestamp getTimestamp() {
         return timestamp;
     }
 
+    // Get Message
     public String getMessage() {
         return message;
     }

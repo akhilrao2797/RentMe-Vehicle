@@ -21,21 +21,25 @@ public class TransactionController {
     @Autowired
     VehicleBookingService vehicleBookingService;
 
+    // API to get all the booking details
     @GetMapping("/get/booking")
     public ResponseEntity<List<BookingDetails>> getBookings(){
         return ResponseEntity.ok(vehicleBookingService.getAllBookings());
     }
 
+    // API to get the booking details of a specific customer using customerId
     @GetMapping("/get/booking/customer/{customerId}")
     public ResponseEntity<List<BookingDetails>> getBookingsOfCustomer(@PathVariable final String customerId){
         return ResponseEntity.ok(vehicleBookingService.getBookingsOfCustomer(customerId));
     }
 
+    // API to get the booking details using bookingId
     @GetMapping("/get/booking('{bookingId}')")
     public ResponseEntity<BookingDetails> getBookingById(@PathVariable final String bookingId){
         return ResponseEntity.ok(vehicleBookingService.getBookingById(bookingId));
     }
 
+    // API to add new booking for a specify customer
     @PostMapping("/add/booking")
     public ResponseEntity<BookingDetails> addBookingInfo(@Valid @RequestBody final BookingDetails bookingDetails,
                                          @RequestParam final String customerId,
@@ -45,6 +49,7 @@ public class TransactionController {
                 .body(vehicleBookingService.addNewBooking(bookingDetails, customerId, vehicleId));
     }
 
+    // API to update a booking using unique bookingId
     @PutMapping("/update/booking/{bookingId}")
     public ResponseEntity<BookingDetails> updateBookingInfo(@PathVariable String bookingId,
                                             @RequestParam
@@ -56,6 +61,7 @@ public class TransactionController {
                 .body(vehicleBookingService.updateBooking(bookingId, toTime, vehicle, status));
     }
 
+    // API to delete a booking using specific bookingId
     @DeleteMapping("/delete/booking/{bookingId}")
     public ResponseEntity<String> deleteBooking(@PathVariable String bookingId){
         return ResponseEntity.accepted().body(vehicleBookingService.deleteBooking(bookingId));

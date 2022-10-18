@@ -30,10 +30,12 @@ public class VehicleBookingService {
         this.vehicleService = vehicleService;
     }
 
+    // Funtion to retrieve all the bookings
     public List<BookingDetails> getAllBookings() {
         return bookingRepository.findAll();
     }
 
+    // Funtion to retrieve booking details of a specific customer
     public List<BookingDetails> getBookingsOfCustomer(String customerId) {
         return bookingRepository
                 .findAll()
@@ -42,6 +44,7 @@ public class VehicleBookingService {
                 .collect(Collectors.toList());
     }
 
+    // Funtion to add new booking
     public BookingDetails addNewBooking(BookingDetails bookingDetails,
                                         String customerId,
                                         String vehicleId) {
@@ -56,11 +59,13 @@ public class VehicleBookingService {
         return null;
     }
 
+    // Funtion to get booking details by bookingId
     public BookingDetails getBookingById(String bookingId) {
         return Optional.of(bookingRepository.findByBookingId(bookingId))
                 .orElseThrow(null);
     }
 
+    // Funtion to update booking details
     public BookingDetails updateBooking(String bookingId,
                                         Optional<LocalDateTime> toTime,
                                         Optional<Vehicle> vehicle,
@@ -78,6 +83,7 @@ public class VehicleBookingService {
         return bookingDetails;
     }
 
+    // Funtion to delete a booking
     public String deleteBooking(String bookingId) {
         BookingDetails bookingDetails = bookingRepository.findByBookingId(bookingId);
         if(bookingDetails == null)

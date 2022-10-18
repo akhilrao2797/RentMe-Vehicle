@@ -16,6 +16,8 @@ public interface TransactionRepository extends JpaRepository<BookingDetails, Str
     List<BookingDetails> findByCustomer(Customer customer);
     BookingDetails findByBookingId(String bookingId);
 
+    // SQL query to return all the vehicles with booking details between the fromTime and toTime
+
     @Query("select v1 from Vehicle v1 left join BookingDetails bd on " +
             "bd.vehicle = v1 where bd.fromTime >= ?1 and bd.toTime <= ?2" +
             " and bd.status = ?3")
