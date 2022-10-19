@@ -11,6 +11,7 @@ import java.util.List;
 @Component
 public class TransactionRequestValidation {
 
+        // Funtion to check if the request of booking detail is valid or not
     public static boolean validateRequest(BookingRepository bookingRepository,
                                           BookingDetails bookingDetails) {
         List<BookingDetails> bookingDetailsList = bookingRepository

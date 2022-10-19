@@ -23,6 +23,8 @@ public class Vehicle {
     @NotNull
     int pricePerLitre;
 
+    // Getter and Setter Methods
+
     public String getRegistrationId() {
         return registrationId;
     }

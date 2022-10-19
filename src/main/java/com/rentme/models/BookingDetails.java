@@ -47,6 +47,7 @@ public class BookingDetails {
     @StatusConstraint
     Status status;
 
+    // Set status - Submitted, Cancelled or Completed
     public void setStatus(String status) {
         switch(status){
             case "SUBMITTED": this.status = Status.SUBMITTED;break;
@@ -56,6 +57,8 @@ public class BookingDetails {
         }
     }
 
+    // Getter and Setter Methods for bookingId
+
     public String getBookingId() {
         return bookingId;
     }
@@ -63,6 +66,8 @@ public class BookingDetails {
     public void setBookingId(String bookingId) {
         this.bookingId = bookingId;
     }
+
+    // Getter and Setter Methods for customer
 
     public Customer getCustomer() {
         return customer;
@@ -72,6 +77,8 @@ public class BookingDetails {
         this.customer = customer;
     }
 
+    // Getter and Setter Methods for vehicle
+
     public Vehicle getVehicle() {
         return vehicle;
     }
@@ -79,6 +86,8 @@ public class BookingDetails {
     public void setVehicle(Vehicle vehicle) {
         this.vehicle = vehicle;
     }
+
+    // Getter and Setter Methods for bookingTime
 
     public LocalDateTime getBookingTime() {
         return bookingTime;
@@ -88,6 +97,8 @@ public class BookingDetails {
         this.bookingTime = bookingTime;
     }
 
+    // Getter and Setter Methods for FromTime
+
     public LocalDateTime getFromTime() {
         return fromTime;
     }
@@ -96,6 +107,8 @@ public class BookingDetails {
         this.fromTime = fromTime;
     }
 
+    // Getter and Setter Methods for ToTime
+
     public LocalDateTime getToTime() {
         return toTime;
     }
@@ -103,6 +116,8 @@ public class BookingDetails {
     public void setToTime(LocalDateTime toTime) {
         this.toTime = toTime;
     }
+
+    // Getter and Setter Methods for status
 
     public Status getStatus() {
         return status;

@@ -18,6 +18,7 @@ public class CustomerService {
         return customerRepository.save(customer);
     }
 
+    // Funtion to update customer details
     public Customer updateCustomerDetails(String customerId,
                                           Optional<String> address,
                                           Optional<String> mobile,
@@ -37,6 +38,7 @@ public class CustomerService {
         return currentCustomer;
     }
 
+    // Funtion to delete a customer
     public String deleteCustomer(String customerId) {
         Optional<Customer> customer = customerRepository.findById(customerId);
         if(!customer.isPresent())
@@ -47,6 +49,7 @@ public class CustomerService {
         return "Successfully deleted";
     }
 
+    // Funtion to retrieve customer details
     public Optional<Customer> getCustomer(String customerId) {
         return customerRepository.findById(customerId);
     }
