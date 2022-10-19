@@ -1,7 +1,7 @@
 package com.rentme.services;
 
 import com.rentme.models.Vehicle;
-import com.rentme.repository.BookingRepository;
+import com.rentme.repository.TransactionRepository;
 import com.rentme.repository.VehicleRepository;
 import com.rentme.utils.Status;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,12 +16,12 @@ import java.util.stream.Collectors;
 public class VehicleService {
 
     VehicleRepository vehicleRepository;
-    BookingRepository bookingRepository;
+    TransactionRepository transactionRepository;
 
     @Autowired
-    VehicleService(VehicleRepository vehicleRepository, BookingRepository bookingRepository){
+    VehicleService(VehicleRepository vehicleRepository, TransactionRepository transactionRepository){
         this.vehicleRepository = vehicleRepository;
-        this.bookingRepository = bookingRepository;
+        this.transactionRepository = transactionRepository;
     }
 
     public Vehicle postVehicle(Vehicle vehicle) {
@@ -59,7 +59,7 @@ public class VehicleService {
     }
 
     public List<Vehicle> getFreeVehicles(LocalDateTime fromTime, LocalDateTime toTime) {
-        List<Vehicle> bookedVehicles = bookingRepository
+        List<Vehicle> bookedVehicles = transactionRepository
                 .findBookingsWithinTime(fromTime, toTime, Status.SUBMITTED);
         List<Vehicle> vehicles = vehicleRepository.findAll();
         return vehicles

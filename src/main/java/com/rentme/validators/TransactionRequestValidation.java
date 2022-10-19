@@ -1,7 +1,7 @@
 package com.rentme.validators;
 
 import com.rentme.models.BookingDetails;
-import com.rentme.repository.BookingRepository;
+import com.rentme.repository.TransactionRepository;
 import com.rentme.utils.Status;
 import org.springframework.stereotype.Component;
 
@@ -12,9 +12,9 @@ import java.util.List;
 public class TransactionRequestValidation {
 
         // Funtion to check if the request of booking detail is valid or not
-    public static boolean validateRequest(BookingRepository bookingRepository,
+    public static boolean validateRequest(TransactionRepository transactionRepository,
                                           BookingDetails bookingDetails) {
-        List<BookingDetails> bookingDetailsList = bookingRepository
+        List<BookingDetails> bookingDetailsList = transactionRepository
                 .findByCustomer(bookingDetails.getCustomer());
         long count = bookingDetailsList
                 .stream()

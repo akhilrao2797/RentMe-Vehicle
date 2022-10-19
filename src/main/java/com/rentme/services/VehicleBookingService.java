@@ -2,9 +2,9 @@ package com.rentme.services;
 
 import com.rentme.models.BookingDetails;
 import com.rentme.models.Vehicle;
-import com.rentme.repository.BookingRepository;
+import com.rentme.repository.TransactionRepository;
 import com.rentme.utils.Status;
-import com.rentme.validators.BookingRequestValidation;
+import com.rentme.validators.TransactionRequestValidation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,27 +17,27 @@ import java.util.stream.Collectors;
 @Service
 public class VehicleBookingService {
 
-    BookingRepository bookingRepository;
+    TransactionRepository transactionRepository;
     CustomerService customerService;
     VehicleService vehicleService;
 
     @Autowired
-    VehicleBookingService(BookingRepository bookingRepository,
+    VehicleBookingService(TransactionRepository transactionRepository,
                           CustomerService customerService,
                           VehicleService vehicleService){
-        this.bookingRepository = bookingRepository;
+        this.transactionRepository = transactionRepository;
         this.customerService = customerService;
         this.vehicleService = vehicleService;
     }
 
     // Funtion to retrieve all the bookings
     public List<BookingDetails> getAllBookings() {
-        return bookingRepository.findAll();
+        return transactionRepository.findAll();
     }
 
     // Funtion to retrieve booking details of a specific customer
     public List<BookingDetails> getBookingsOfCustomer(String customerId) {
-        return bookingRepository
+        return transactionRepository
                 .findAll()
                 .stream()
                 .filter(booking -> booking.getCustomer().getCustomerId().equals(customerId))
@@ -54,14 +54,14 @@ public class VehicleBookingService {
             bookingDetails.setVehicle(vehicleDetails.get());
         else
             throw new NoSuchElementException("Vehicle does not exist");
-        if(BookingRequestValidation.validateRequest(bookingRepository,bookingDetails))
-            return bookingRepository.save(bookingDetails);
+        if(TransactionRequestValidation.validateRequest(transactionRepository,bookingDetails))
+            return transactionRepository.save(bookingDetails);
         return null;
     }
 
     // Funtion to get booking details by bookingId
     public BookingDetails getBookingById(String bookingId) {
-        return Optional.of(bookingRepository.findByBookingId(bookingId))
+        return Optional.of(transactionRepository.findByBookingId(bookingId))
                 .orElseThrow(null);
     }
 
@@ -70,7 +70,7 @@ public class VehicleBookingService {
                                         Optional<LocalDateTime> toTime,
                                         Optional<Vehicle> vehicle,
                                         Optional<Status> status) {
-        BookingDetails bookingDetails = bookingRepository.findByBookingId(bookingId);
+        BookingDetails bookingDetails = transactionRepository.findByBookingId(bookingId);
         if(bookingDetails == null)
             return null;
         if(toTime.isPresent())
@@ -79,16 +79,16 @@ public class VehicleBookingService {
             bookingDetails.setVehicle(vehicle.get());
         if(status.isPresent())
             bookingDetails.setStatus(status.get().toString());
-        bookingRepository.save(bookingDetails);
+        transactionRepository.save(bookingDetails);
         return bookingDetails;
     }
 
     // Funtion to delete a booking
     public String deleteBooking(String bookingId) {
-        BookingDetails bookingDetails = bookingRepository.findByBookingId(bookingId);
+        BookingDetails bookingDetails = transactionRepository.findByBookingId(bookingId);
         if(bookingDetails == null)
             return "Booking id invalid";
-        bookingRepository.delete(bookingDetails);
+        transactionRepository.delete(bookingDetails);
         return "Successfully deleted";
     }
 }
