@@ -14,4 +14,10 @@ public class RentMeExceptionHandler extends ResponseEntityExceptionHandler {
         CustomException exception = new CustomException(400, ex.getMessageId(), ex.getMessage());
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(exception);
     }
+
+    @ExceptionHandler(VehicleNotFoundException.class)
+    public final ResponseEntity<CustomException> handleAllExceptions(VehicleNotFoundException ex){
+        CustomException exception = new CustomException(400, ex.getMessageId(), ex.getMessage());
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(exception);
+    }
 }
