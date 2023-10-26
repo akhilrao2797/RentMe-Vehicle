@@ -19,6 +19,7 @@ Furthermore, it provides the functionality for searching the database (built in 
 
 For detailed API documentation, you can refer to our [Swagger API Documentation](https://petstore.swagger.io/).
 ## Customer Endpoints
+## Transaction Endpoints
 
 ## Vehicle Endpoints
 
