@@ -2,7 +2,7 @@
 
 Vehicle for Rent
 > Rent your desired car
-
+> Rent your desired bike
 > Doorstep service
 
 ----------------------------------------------
