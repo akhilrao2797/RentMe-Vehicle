@@ -1,4 +1,4 @@
-package com.rentme.controller;
+package com.rentme.resources;
 
 import com.rentme.models.Customer;
 import com.rentme.services.CustomerService;
@@ -11,7 +11,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/v1")
-public class CustomerController {
+public class CustomerResources {
 
     @Autowired
     CustomerService customerService;

@@ -1,4 +1,4 @@
-package com.rentme.controller;
+package com.rentme.resources;
 
 import com.rentme.models.Vehicle;
 import com.rentme.services.VehicleService;
@@ -14,7 +14,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/v1")
-public class VehicleController {
+public class VehicleResources {
 
     @Autowired
     VehicleService vehicleService;
