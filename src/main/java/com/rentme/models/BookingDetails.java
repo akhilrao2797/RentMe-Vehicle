@@ -3,6 +3,7 @@ package com.rentme.models;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.rentme.utils.Status;
 import com.rentme.validators.StatusConstraint;
+import lombok.Data;
 
 import javax.persistence.*;
 import javax.validation.constraints.FutureOrPresent;
@@ -11,6 +12,7 @@ import javax.validation.constraints.PastOrPresent;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
+@Data
 @Entity
 public class BookingDetails {
 
@@ -55,75 +57,5 @@ public class BookingDetails {
             case "COMPLETED": this.status = Status.COMPLETED;break;
             default : this.status = Status.ERROR;
         }
-    }
-
-    // Getter and Setter Methods for bookingId
-
-    public String getBookingId() {
-        return bookingId;
-    }
-
-    public void setBookingId(String bookingId) {
-        this.bookingId = bookingId;
-    }
-
-    // Getter and Setter Methods for customer
-
-    public Customer getCustomer() {
-        return customer;
-    }
-
-    public void setCustomer(Customer customer) {
-        this.customer = customer;
-    }
-
-    // Getter and Setter Methods for vehicle
-
-    public Vehicle getVehicle() {
-        return vehicle;
-    }
-
-    public void setVehicle(Vehicle vehicle) {
-        this.vehicle = vehicle;
-    }
-
-    // Getter and Setter Methods for bookingTime
-
-    public LocalDateTime getBookingTime() {
-        return bookingTime;
-    }
-
-    public void setBookingTime(LocalDateTime bookingTime) {
-        this.bookingTime = bookingTime;
-    }
-
-    // Getter and Setter Methods for FromTime
-
-    public LocalDateTime getFromTime() {
-        return fromTime;
-    }
-
-    public void setFromTime(LocalDateTime fromTime) {
-        this.fromTime = fromTime;
-    }
-
-    // Getter and Setter Methods for ToTime
-
-    public LocalDateTime getToTime() {
-        return toTime;
-    }
-
-    public void setToTime(LocalDateTime toTime) {
-        this.toTime = toTime;
-    }
-
-    // Getter and Setter Methods for status
-
-    public Status getStatus() {
-        return status;
-    }
-
-    public void setStatus(Status status) {
-        this.status = status;
     }
 }
